@@ -1,6 +1,4 @@
 # coding: utf-8
-require 'spree_sales/version'
-
 Gem::Specification.new do |spec|
   spec.name          = "spree_sales"
   spec.version       = "0.1.0"
