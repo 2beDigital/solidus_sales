@@ -3,7 +3,7 @@ require 'spree_sales/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "spree_sales"
-  spec.version       = SpreeSales::VERSION
+  spec.version       = "0.1.0"
   spec.authors       = ["Noel"]
   spec.email         = ["noel@2bedigital.com"]
 
