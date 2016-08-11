@@ -1,0 +1,51 @@
+es:
+  spree:
+    promotion_action_types:
+      create_adjustment:
+        description: Crea una promoción con ajuste al total de la orden
+        name: Crear ajuste al total de la orden
+      create_item_adjustments:
+        description: Crea una promoción con ajuste por producto
+        name: Crear ajuste por producto
+      create_line_items:
+        description: Añade al carrito con la cantidad especificada de la variante
+        name: Crear lineas de producto
+      free_shipping:
+        description: Hace que todos los envios para la orden sean gratis
+        name: Envio gratuito
+    promotion_actions: Accciones
+    promotion_category: Categoria de la promoción
+    promotion_form:
+      match_policies:
+        all: Coincide con todas estas reglas
+        any: Coincide con alguna de estas reglas
+    promotion_label: 'Promoción (%{name})'
+    promotion_rule: Reglas de la promoción
+    promotion_rule_types:
+      first_order:
+        description: Debe ser la primera comprar del usuario
+        name: Primera compra
+      item_total:
+        description: El total de la orden cumple con estos criterios
+        name: Total de la orden
+      landing_page:
+        description: El cliente debe visitar una pagina especifica
+        name: Visita una pagina
+      one_use_per_user:
+        description: Un solo uso por usuario
+        name: Un uso por usuario
+      option_value:
+        description: La compra incluye productos específicos que coinciden con las opciones
+        name: Valor de las opciones
+      product:
+        description: La compra incluye productos específicos
+        name: Producto(s)
+      user:
+        description: Disponible solo para usuarios específicos
+        name: Usuarios específicos
+      user_logged_in:
+        description: Disponible solo para usuarios registrados
+        name: Usuarios registrados
+      taxon:
+        description: La compra incluye productos de las siguientes categorias
+      name: Categoría(s)
