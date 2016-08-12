@@ -48,4 +48,4 @@ es:
         name: Usuarios registrados
       taxon:
         description: La compra incluye productos de las siguientes categorias
-      name: Categoría(s)
+        name: Categoría(s)
