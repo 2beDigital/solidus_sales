@@ -22,13 +22,46 @@ And finally run the install generator to automatically insert 'require spree/fro
 rails g spree_sales:install
 ```
 
-## Development
+## Instructions
 
-After checking out the repo, run `bin/setup` to install dependencies. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+Spree_sales gives us a view of the promotions that are being applied in our shop in the frontend, allocated the percentage applied to each product with its updated price and the price above cost.
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+They are currently implemented the following promotions:
+ 
+Promotion for whole store (configuration):
+- Without rules.
+- Type of action: create-whole-adjustment
+- Calculator: Flat percent. 
+
+Promotion by categories:
+- Rules: Taxons.
+- Type of action: Create-line-items-adjustment
+- Calculator: Percent Per Item.
+
+## Instrucciones:
+
+Spree_sales nos permite tener una visualización de las promociones que se están aplicando en nuestra tienda en el frontend, asignado el porcentage aplicado a cada producto con su precio actualizado y el precio de coste anterior. 
+
+Actualmente están implementadas las siguientes promociones:
+ 
+Promoción para toda la tienda (configuración):
+- Sin reglas.
+- Tipo de acción: crear un ajuste
+- Calculador: Porcentaje fijo
+
+Promoción por categorías:
+- Reglas: Taxons.
+- Tipo de accion: Create line items adjustment
+- Calculador: Porcentaje por producto
+
+## TODO:
+
+Promotion products.
+Promotion by users.
+Promotion for visiting landing page.
+Promocion first purchase
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/spree_sales.
+Bug reports and pull requests are welcome on GitHub at https://github.com/2bedigital/spree_sales.
 
