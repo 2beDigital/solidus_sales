@@ -49,3 +49,7 @@ es:
       taxon:
         description: La compra incluye productos de las siguientes categorias
         name: Categoría(s)
+  activerecord:
+    attributes:
+      spree/promotion:
+          active_spree_sales: Mostrar promoción en tienda
