@@ -1,7 +1,7 @@
 Spree::BaseHelper.module_eval do
   def get_promotion_all_store
-    ids = Spree::PromotionAction.select(:id).where(promotion_id: (Spree::Promotion.active.select(:id)), type: "Spree::Promotion::Actions::CreateAdjustment").map(&:id)
-    calculators = Spree::Calculator.where(calculable_id: ids)
+    ids = Spree::PromotionAction.select(:id).where(promotion_id: (Spree::Promotion.active.select(:id).where(active_spree_sales: true)), type: "Spree::Promotion::Actions::CreateAdjustment").map(&:id)
+    calculators = Spree::Calculator.where(calculable_id: ids, calculable_type: "Spree::PromotionAction" )
 
     return 0 if calculators.blank?
     object = calculators.first
@@ -16,7 +16,7 @@ Spree::BaseHelper.module_eval do
   end
 
   def get_calculator(promotion_id)
-    calculator = Spree::Calculator.find_by(calculable_id: (Spree::PromotionAction.select(:id).where(promotion_id: promotion_id)))
+    calculator = Spree::Calculator.find_by(calculable_id: (Spree::PromotionAction.select(:id).where(promotion_id: promotion_id)), calculable_type: "Spree::PromotionAction")
     
     # Return necessary to avoid errors
     return calculator.preferred_percent if calculator.respond_to?('preferred_percent') # when the promotion is applied to the line items (implemented)
@@ -26,7 +26,7 @@ Spree::BaseHelper.module_eval do
 
   def promotion_by_taxons 
     if !Spree::Promotion.active.blank?
-      promotions_by_taxons = Spree::Promotion.active.select(:id).where(id: (Spree::PromotionRule.select(:promotion_id).where(type: "Spree::Promotion::Rules::Taxon"))).map(&:id)
+      promotions_by_taxons = Spree::Promotion.active.select(:id).where(id: (Spree::PromotionRule.select(:promotion_id).where(type: "Spree::Promotion::Rules::Taxon")), active_spree_sales: true).map(&:id)
       promotion_and_calculator = []
 
       # Select a promotion with percent aplicable and list of aplicable products
