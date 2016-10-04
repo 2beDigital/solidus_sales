@@ -95,6 +95,7 @@ Spree::BaseHelper.module_eval do
 
   def display_cost_price(product_or_variant)   
     cost_price = get_cost_price(product_or_variant.id, product_or_variant)
-    content_tag(:span, to_money(cost_price), class: 'cost-price selling')
+    return content_tag(:span, to_money(cost_price), class: 'cost-price selling') if !cost_price.blank?
+    nil
   end
 end
