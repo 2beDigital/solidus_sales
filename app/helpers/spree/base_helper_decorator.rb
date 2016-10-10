@@ -73,16 +73,24 @@ Spree::BaseHelper.module_eval do
   end
 
   def display_price(product_or_variant)
-    product_price = product_or_variant.price * (100 - percentage(product_or_variant.id))/100
+    product_price = is_promotionable?(product_or_variant) ? product_or_variant.price * (100 - percentage(product_or_variant.id))/100 : product_or_variant.price 
     to_money(product_price)
   end
 
   def variant_price(product_or_variant) 
-    variant_price = product_or_variant.price * (100 - percentage(product_or_variant.product_id))/100
+    variant_price = is_promotionable?(product_or_variant) ? product_or_variant.price * (100 - percentage(product_or_variant.product_id))/100 : product_or_variant.price
+  end
+
+  def is_promotionable?(product)
+      if product.respond_to?(:promotionable)
+        return product.promotionable
+      else
+        return Spree::Product.find_by(id: product.product_id).promotionable
+      end
   end
 
   def get_cost_price(id, product_or_variant)  
-    if percentage(id) > 0
+    if percentage(id) > 0 && is_promotionable?(product_or_variant)
       cost_price = product_or_variant.price
     else
       cost_price = product_or_variant.cost_price
