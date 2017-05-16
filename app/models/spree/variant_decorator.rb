@@ -1,7 +1,7 @@
 Spree::Variant.class_eval do
 
   include ActionView::Helpers::NumberHelper
-  include Spree::BaseHelper
+  include Sales
 
   def to_hash
     actual_price  = variant_price(self)
