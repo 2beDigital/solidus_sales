@@ -1,4 +1,4 @@
-SpreeSales
+SolidusSales
 =============
 
 ## Installation
@@ -6,7 +6,7 @@ SpreeSales
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'spree_sales'
+gem 'solidus_sales'
 ```
 
 And then execute:
@@ -16,15 +16,15 @@ bundle install
 ```
 
 
-And finally run the install generator to automatically insert 'require spree/frontend/spree_minicart' in your asset file. If you experience a problem with loading assets from the 'vendor/assets' folder, simply copy the relevant lines into the 'app/assets' files (all.js, all.css).
+And finally run the install generator to automatically insert 'require spree/frontend/solidus_sales' in your asset file. If you experience a problem with loading assets from the 'vendor/assets' folder, simply copy the relevant lines into the 'app/assets' files (all.js, all.css).
 
 ```ruby
-rails g spree_sales:install
+rails g solidus_sales:install
 ```
 
 ## Instructions
 
-Spree_sales gives us a view of the promotions that are being applied in our shop in the frontend, allocated the percentage applied to each product with its updated price and the price above cost.
+solidus_sales gives us a view of the promotions that are being applied in our shop in the frontend, allocated the percentage applied to each product with its updated price and the price above cost.
 
 They are currently implemented the following promotions:
  
@@ -40,7 +40,7 @@ Promotion by categories:
 
 ## Instrucciones:
 
-Spree_sales nos permite tener una visualización de las promociones que se están aplicando en nuestra tienda en el frontend, asignado el porcentage aplicado a cada producto con su precio actualizado y el precio de coste anterior. 
+solidus_sales nos permite tener una visualización de las promociones que se están aplicando en nuestra tienda en el frontend, asignado el porcentage aplicado a cada producto con su precio actualizado y el precio de coste anterior. 
 
 Actualmente están implementadas las siguientes promociones:
  
@@ -63,5 +63,5 @@ Promocion first purchase
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/2bedigital/spree_sales.
+Bug reports and pull requests are welcome on GitHub at https://github.com/2bedigital/solidus_sales.
 

@@ -52,4 +52,4 @@ es:
   activerecord:
     attributes:
       spree/promotion:
-          active_spree_sales: Mostrar promoción en tienda
+          active_solidus_sales: Mostrar promoción en tienda
