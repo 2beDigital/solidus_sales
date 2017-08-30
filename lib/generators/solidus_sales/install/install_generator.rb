@@ -12,6 +12,10 @@ module SolidusSales
         run 'bundle exec rake railties:install:migrations FROM=solidus_sales'
       end
 
+      def add_helper
+        inject_into_file 'app/helpers/application_helper.rb', "include Sales\n", :after => "module ApplicationHelper\n"
+      end
+
       def run_migrations
         run_migrations = options[:auto_run_migrations] || ['', 'y', 'Y'].include?(ask 'Would you like to run the migrations now? [Y/n]')
         if run_migrations
