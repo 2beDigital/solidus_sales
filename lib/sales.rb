@@ -7,7 +7,11 @@ module Sales
 	end
 
 	def get_percent(promotion)
-		return promotion.actions.first.calculator.preferences.values.first.to_i
+		if promotion.actions.present?
+			return promotion.actions.first.calculator.preferences.values.first.to_i
+		else
+			return 0
+		end
 	end
 
 	def taxons_promotion 
@@ -32,6 +36,27 @@ module Sales
 		end
 	end
 
+	def products_promotion
+	    if !Spree::Promotion.active.blank?
+	    	products_promotions, promotions = [],[]
+			Spree::Promotion::Rules::Product.all.each { |p| (p.promotion.active? && p.promotion.active_solidus_sales) ? products_promotions << p : nil }
+			# Select a promotion with percent aplicable and list of aplicable products
+			products_promotions.each do |p|
+				promotions << { percent: get_percent(p.promotion), products: p.product_ids }
+			end   
+
+			# Select the best promotion for taxons with more than one promotion
+			promotions.each do |p_1|
+				promotions.each do |p_2|
+				  if p_1[:percent] < p_2[:percent]
+				     p_1[:products] = p_1[:products] - p_2[:products]
+				  end
+				end
+			end
+			return promotions
+	    end
+	end
+
 	def get_products_for_promotion(taxons)
 		Spree::Product.select(:id).where("spree_products.id in (select product_id from spree_products_taxons where taxon_id in (?))", taxons).map(&:id)
 	end
@@ -53,7 +78,15 @@ module Sales
 	end
 
 	def percentage(id)
-		percent = (discount_taxon(taxons_promotion, id) != 0 ) ? discount_taxon(taxons_promotion, id) : percent_global_promotion
+		products_promotions = discount_taxon(products_promotion, id)
+		taxons_promotions = discount_taxon(taxons_promotion, id)
+		if products_promotions != 0 && products_promotions > taxons_promotions
+			products_promotions
+		elsif taxons_promotions != 0
+			taxons_promotions
+		else
+			percent_global_promotion
+		end
 	end
 
 	def calculate(variant)

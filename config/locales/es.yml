@@ -36,7 +36,7 @@ es:
         name: Un uso por usuario
       option_value:
         description: La compra incluye productos específicos que coinciden con las opciones
-        name: Valor de las opciones
+        name: Productos con opciones especificas
       product:
         description: La compra incluye productos específicos
         name: Producto(s)
@@ -49,6 +49,17 @@ es:
       taxon:
         description: La compra incluye productos de las siguientes categorias
         name: Categoría(s)
+      nth_order:
+        description: Aplique una promoción a cada enésimo pedido que haya completado un usuario.
+        name: Enésimo Pedido
+        form_text: "Aplicar esta promoción en el pedido Nth de cada usuario:"
+      first_repeat_purchase_since:
+        description: Disponible solo para usuarios que no hayan comprado por un tiempo
+        name: Primera compra repetida desde
+        form_text: "Aplicar esta promoción a los usuarios cuyo último pedido fue hace más de X días:"
+      user_role:
+        description: El pedido incluye un usuario con un rol(es) especifico
+        name: Rol(es) de usuarios
   activerecord:
     attributes:
       spree/promotion:
