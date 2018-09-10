@@ -7,6 +7,9 @@ es:
       create_item_adjustments:
         description: Crea una promoción con ajuste por producto
         name: Crear ajuste por producto
+      create_quantity_adjustments:
+        description: Crea un ajuste en una línea de pedido en función de la cantidad
+        name: CCrear ajuste por cantidad
       create_line_items:
         description: Añade al carrito con la cantidad especificada de la variante
         name: Crear lineas de producto
