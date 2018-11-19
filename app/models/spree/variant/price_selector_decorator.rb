@@ -20,7 +20,6 @@ Spree::Variant::PriceSelector.class_eval do
           ( price.country_iso == price_options.desired_attributes[:country_iso] ||
             price.country_iso.nil?
           ) && price.currency == price_options.desired_attributes[:currency]
-          price.amount = is_promotionable?(variant) ? calculate(variant) : price.amount
         end.try!(:money)
       end
 

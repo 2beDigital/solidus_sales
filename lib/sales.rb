@@ -122,4 +122,5 @@ module Sales
 		return content_tag(:span, to_money(cost_price), class: 'cost-price selling') if !cost_price.blank?
 		nil
 	end
+
 end
