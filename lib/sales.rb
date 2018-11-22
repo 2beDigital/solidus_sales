@@ -62,7 +62,7 @@ module Sales
 	end
 
 	def to_money(price)
-		Spree::Money.new(price, { currency: current_currency }).to_html if ( !price.blank? && price > 0) # conditional for show or not cost_price
+		Spree::Money.new(price, { currency: current_pricing_options.currency }).to_html if ( !price.blank? && price > 0) # conditional for show or not cost_price
 	end
 
 	def discount_taxon(promotions, id)
