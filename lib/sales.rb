@@ -80,12 +80,13 @@ module Sales
 	def percentage(id)
 		products_promotions = discount_taxon(products_promotion, id)
 		taxons_promotions = discount_taxon(taxons_promotion, id)
-		if products_promotions != 0 && products_promotions > taxons_promotions && products_promotions > percent_global_promotion
+		global_promotion = percent_global_promotion
+		if products_promotions != 0 && products_promotions > taxons_promotions && products_promotions > global_promotion
 			products_promotions
-		elsif taxons_promotions != 0 && taxons_promotions > percent_global_promotion
+		elsif taxons_promotions != 0 && taxons_promotions > global_promotion
 			taxons_promotions
 		else
-			percent_global_promotion
+			global_promotion
 		end
 	end
 
