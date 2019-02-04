@@ -10,7 +10,7 @@ Deface::Override.new(virtual_path: 'spree/products/_cart_form',
 
 Deface::Override.new(virtual_path: 'spree/shared/_products',
 					 name: 'insert_span_sales_on_products',
-					 insert_bottom: 'span[itemprop="offers"]',
+					 insert_after: 'span.price',
 					 text: '<% if percentage(product.id) > 0 && product.promotionable && product.price > 0 %><span class="sales">-<%= percentage(product.id) %>%</span><% end %>')
 
 Deface::Override.new(virtual_path: 'spree/products/_cart_form',
