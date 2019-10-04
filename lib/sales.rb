@@ -1,7 +1,7 @@
 module Sales
 	def percent_global_promotion
 		global_promotion, percent = [], 0
-		Spree::Promotion.active.where.not(active_solidus_sales: nil).each { |p| p.rules.empty? ? global_promotion << p : nil }
+		Spree::Promotion.active.where(active_solidus_sales: true).each { |p| p.rules.empty? ? global_promotion << p : nil }
 		global_promotion.each { |p| percent = (percent < get_percent(p)) ? get_percent(p) : percent } if global_promotion.present?
 		return percent
 	end
