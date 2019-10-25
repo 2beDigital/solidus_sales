@@ -9,14 +9,15 @@ es:
         name: Crear ajuste por producto
       create_quantity_adjustments:
         description: Crea un ajuste en una línea de pedido en función de la cantidad
-        name: CCrear ajuste por cantidad
+        name: Crear ajuste por cantidad
       create_line_items:
         description: Añade al carrito con la cantidad especificada de la variante
         name: Crear lineas de producto
       free_shipping:
         description: Hace que todos los envios para la orden sean gratis
         name: Envio gratuito
-    promotion_actions: Accciones
+    promotion_actions: Acciones
+    promotion_action: Acciones
     promotion_category: Categoria de la promoción
     promotion_form:
       match_policies:
