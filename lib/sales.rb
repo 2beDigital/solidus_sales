@@ -1,20 +1,20 @@
 module Sales
 	def percent_global_promotion
-		global_promotion, percent = [], 0
+		global_promotion, percent = [], [0,'']
 		Spree::Promotion.active.where(active_solidus_sales: true).each { |p| p.rules.empty? ? global_promotion << p : nil }
-		global_promotion.each { |p| percent = (percent < get_percent(p)) ? get_percent(p) : percent } if global_promotion.present?
+		global_promotion.each { |p| percent = (percent.first < get_percent(p).first) ? get_percent(p) : percent } if global_promotion.present?
 		return percent
 	end
 
 	def get_percent(promotion)
 		if promotion.actions.present?
 			if promotion.actions.first.type != "Spree::Promotion::Actions::CreateLineItems"
-				return promotion.actions.first.calculator.preferences.values.first.to_i 
+				return [promotion.actions.first.calculator.preferences.values.first.to_i, promotion.actions.first.calculator.type ]
 			else
-				return 0
+				return [0,'']
 			end
 		else
-			return 0
+			return [0,'']
 		end
 	end
 
@@ -30,7 +30,7 @@ module Sales
 		  # Select the best promotion for taxons with more than one promotion
 		  promotions.each do |p_1|
 		    promotions.each do |p_2|
-		      if p_1[:percent] < p_2[:percent]
+		      if p_1[:percent].first < p_2[:percent].first
 		         p_1[:taxons] = p_1[:taxons] - p_2[:taxons]
 		         p_1[:products] = p_1[:products] - p_2[:products]
 		      end
@@ -42,8 +42,8 @@ module Sales
 
 	def products_promotion
 		products_promotions = Spree::Promotion::Rules::Product.where(promotion_id: Spree::Promotion.active.where(active_solidus_sales: true).ids)
-    if products_promotions.present?
-    	promotions = []
+	    if products_promotions.present?
+	    	promotions = []
 			# Select a promotion with percent aplicable and list of aplicable products
 			products_promotions.each do |p|
 				promotions << { percent: get_percent(p.promotion), products: p.product_ids }
@@ -52,13 +52,13 @@ module Sales
 			# Select the best promotion for taxons with more than one promotion
 			promotions.each do |p_1|
 				promotions.each do |p_2|
-				  if p_1[:percent] < p_2[:percent]
+				  if p_1[:percent].first < p_2[:percent].first
 				     p_1[:products] = p_1[:products] - p_2[:products]
 				  end
 				end
 			end
 			return promotions
-    end
+	    end
 	end
 
 	def get_products_for_promotion(taxons)
@@ -70,15 +70,17 @@ module Sales
 	end
 
 	def discount_taxon(promotions, id)
-		percent = 0
 		if !promotions.blank? 
+			percent = [0,'']
 		    promotions.each do |p|
 		        if p[:products].include? id
 		          percent = p[:percent]
 		        end
 		    end
-		end 
-		return percent   
+		    return percent
+		else
+			return [0,'']
+		end 		   
 	end
 
 	def percentage(item,id)
@@ -87,9 +89,9 @@ module Sales
 			products_promotions = discount_taxon(products_promotion, id)
 			taxons_promotions = discount_taxon(taxons_promotion, id)
 			global_promotion = percent_global_promotion
-			if products_promotions != 0 && products_promotions > taxons_promotions && products_promotions > global_promotion
+			if products_promotions.first != 0 && products_promotions.first > taxons_promotions.first && products_promotions.first > global_promotion.first
 				products_promotions
-			elsif taxons_promotions != 0 && taxons_promotions > global_promotion
+			elsif taxons_promotions.first != 0 && taxons_promotions.first > global_promotion.first
 				taxons_promotions
 			else
 				global_promotion
@@ -98,7 +100,12 @@ module Sales
 	end
 
 	def calculate(variant)
-		return variant.price * ( 100 - percentage(variant,variant.product_id) ) / 100
+		discount = percentage(variant,variant.product_id)
+		if discount.second == "Spree::Calculator::FlatRate"
+			return variant.price - discount.first
+		else
+			return variant.price * ( 100 - discount.first ) / 100
+		end
 	end
 
 	def is_promotionable?(product)
@@ -110,7 +117,7 @@ module Sales
 	end
 
 	def get_cost_price(id, product_or_variant)  
-		if percentage(product_or_variant,id) > 0 && is_promotionable?(product_or_variant)
+		if percentage(product_or_variant,id).first > 0 && is_promotionable?(product_or_variant)
 			cost_price = product_or_variant.price
 		else
 			cost_price = product_or_variant.cost_price
